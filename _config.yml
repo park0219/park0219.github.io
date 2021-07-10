@@ -38,6 +38,19 @@ plugins:
 remote_theme: samarsault/plainwhite-jekyll
 
 
+#plainwhite config
+plainwhite:
+  name: SungHwan Park
+  tagline: Backend Developer
+  date_format: "%b %-d, %Y"
+
+  social_link:
+    github: park0219
+
+  portfolio_image: "assests/protfolio.jpeg"
+
+  show_excerpts: true
+  plainwhite: false
 # Exclude from processing.
 # The following items will not be processed, by default.
 # Any item listed under the `exclude:` key here will be automatically added to
