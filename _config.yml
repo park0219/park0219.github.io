@@ -47,7 +47,7 @@ plainwhite:
   social_link:
     github: park0219
 
-  portfolio_image: "assests/protfolio.jpeg"
+  portfolio_image: "assests/portfolio.jpeg"
 
   show_excerpts: true
   plainwhite: false
