@@ -33,6 +33,7 @@ github_username:  jekyll
 theme: plainwhite
 plugins:
   - jekyll-feed
+  - jekyll-seo-tag
 
 remote_theme: samarsault/plainwhite-jekyll
 
