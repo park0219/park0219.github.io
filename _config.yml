@@ -2,9 +2,7 @@ title: park0219's blog
 author: park0219
 email: park0219ok@outlook.com
 description: > # this means to ignore newlines until "show_exerpts:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
+  현재 백엔드 웹 개발자로 일하고 있습니다.
 show_excerpts: true # set to true to show excerpts on the homepage
 
 # Minima date format
@@ -53,7 +51,7 @@ plainwhite:
 # - about.md
 
 # Build settings
-theme: plainwhite
+#theme: plainwhite
 
 plugins:
   - jekyll-seo-tag
