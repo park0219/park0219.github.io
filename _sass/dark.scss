@@ -115,3 +115,15 @@
 		background-color: #0d0d0d;
 	}
 }
+#title a {
+	color: #fff;
+	&:hover {
+		color: $dark_link_color;
+	}
+}
+.page-link a {
+	color: #fff;
+	&:hover {
+		color: $dark_link_color;
+	}
+}
