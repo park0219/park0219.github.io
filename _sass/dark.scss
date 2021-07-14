@@ -106,6 +106,13 @@
 			color: white;
 		}
 	}
+
+	.page-link {
+		color: #fff;
+		&:hover {
+			color: $dark_link_color;
+		}
+	}
 }
 .dark table {
 	th, td {
@@ -113,17 +120,5 @@
 	}
 	th {
 		background-color: #0d0d0d;
-	}
-}
-#title a {
-	color: #fff;
-	&:hover {
-		color: $dark_link_color;
-	}
-}
-.page-link {
-	color: #fff;
-	&:hover {
-		color: $dark_link_color;
 	}
 }
