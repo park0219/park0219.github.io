@@ -334,3 +334,24 @@ footer {
     border-top: 1px solid #eee;
   }
 }
+/* header */
+.page-link {
+  text-decoration: none;
+  line-height: 1.2em;
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+.site-header {
+  border-bottom: 1px solid transparent;
+
+  // Positioning context for the mobile navigation icon
+  position: relative;
+}
+.site-nav {
+  position: absolute;
+  top: 9px;
+  right: 10px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  text-align: right;
+}
