@@ -335,8 +335,12 @@ footer {
   }
 }
 /* header */
+.trigger {
+  a {
+    text-decoration: none;
+  }
+}
 .page-link {
-  text-decoration: none;
   line-height: 1.2em;
   font-size: 28px;
   margin-bottom: 10px;
@@ -351,7 +355,5 @@ footer {
   position: absolute;
   top: 9px;
   right: 10px;
-  border: 1px solid transparent;
-  border-radius: 5px;
   text-align: right;
 }
