@@ -4,7 +4,7 @@ title: About
 permalink: /about/
 ---
 
-![header](https://capsule-render.vercel.app/api?type=soft&color=auto&height=150&section=header&text=ParkSungHwan&fontSize=70&animation=twinkling)
+<br/><br/><br/><br/>
 
 <h3 align="center">🛠 Tech Stack 🛠</h3>
 
@@ -27,6 +27,8 @@ permalink: /about/
   <img src="https://img.shields.io/badge/Microsoft%20SQL%20Sever-CC2927?style=flat-square&logo=microsoft%20sql%20server&logoColor=white">
 </p>
 
-![park0219's GitHub stats](https://github-readme-stats.vercel.app/api?username=park0219&show_icons=true&theme=dracula)
-[![park0219's Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=park0219&hide=html)](https://github.com/park0219/github-readme-stats)
-[![park0219's Solved.ac Profile](http://mazassumnida.wtf/api/v2/generate_badge?boj=park0219ok)](https://solved.ac/park0219ok)
+<p align="center">
+  <img src="https://github-readme-stats.vercel.app/api?username=park0219&show_icons=true&theme=dracula"/><br/>
+  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=park0219&hide=html"/><br/>
+  <img src="http://mazassumnida.wtf/api/v2/generate_badge?boj=park0219ok"/><br/>
+</p>
