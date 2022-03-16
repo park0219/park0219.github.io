@@ -41,3 +41,87 @@ public class App {
 ```
 
 ---
+
+### 3/16(수)
+
+코딩으로 학습하는 GoF의 디자인 패턴 - 싱글톤 패턴 2부<br/>
+멀티 쓰레드 환경에서 안전하게 싱글톤 패턴 구현하기
+
+-   synchronized 키워드 사용하기(성능 저하 있음)
+
+```java
+//Settings
+public class Settings {
+
+    private static Settings instance;
+
+    private Settings() { }
+
+    public static Settings getInstance() {
+        if (instance == null) {
+            instance = new Settings();
+        }
+        return instance;
+    }
+}
+```
+
+-   이른 초기화(eager initialization) 사용하기(인스턴스를 미리 만들기 때문에 로딩 리소스 증가 및 미사용 가능성이 있음)
+
+```java
+//Settings
+public class Settings {
+
+    private static final Settings INSTANCE = new Settings();
+
+    private Settings() { }
+
+    public static Settings getInstance() {
+        return INSTANCE;
+    }
+}
+```
+
+-   double checked locking 사용하기
+
+```java
+//Settings
+public class Settings {
+
+    //volatile 키워드 사용(자바 1.5 이상)
+    private static volatile Settings instance;
+
+    private Settings() { }
+
+    public static Settings getInstance() {
+        if (instance == null) {
+            synchronized(Settings.class) {
+                if(instance == null) {
+                    instance = new Settings();
+                }
+            }
+        }
+        return instance;
+    }
+}
+```
+
+-   static inner 클래스 사용하기
+
+```java
+//Settings
+public class Settings {
+
+    private Settings() { }
+
+    private static class SettingsHolder {
+        private static final Settings INSTANCE = new Settings();
+    }
+
+    public static Settings getInstance() {
+        return SettingHolder.INSTANCE;
+    }
+}
+```
+
+---
