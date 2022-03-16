@@ -8,7 +8,36 @@ categories: 202203 TIL
 ### 3/15(화)
 
 인프런에 올라온 백기선 님의 코딩으로 학습하는 GoF의 디자인 패턴 강의를 시작했다.
-첫 번째 패턴으로 싱글톤 패턴에 대해 학습하였다.
+
+코딩으로 학습하는 GoF의 디자인 패턴 - 싱글톤 패턴 1부<br/>
 싱글톤 패턴을 구현하는 가장 단순한 방식인 private한 생성자와 static한 메소드로 객체를 생성하는 방법에 대해 학습하였다.
+
+```java
+//Settings
+public class Settings {
+
+    private static Settings instance;
+
+    private Settings() { }
+
+    public static Settings getInstance() {
+        if (instance == null) {
+            instance = new Settings();
+        }
+        return instance;
+    }
+}
+```
+
+```java
+//App
+public class App {
+    public static void main(Strings[] args) {
+        Settings settings = Settings.getInstance();
+        Settings settings1 = Settings.getInstance();
+        System.out.println(settings == settings1);
+    }
+}
+```
 
 ---
