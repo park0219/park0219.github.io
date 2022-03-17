@@ -209,3 +209,28 @@ public class Settings implements Serializable {
 ```
 
 ---
+
+### 3/18(금)
+
+코딩으로 학습하는 GoF의 디자인 패턴 - 싱글톤 패턴 4부<br/>
+안전하고 단순하게 구현하는 방법
+
+-   enum 사용하기
+
+    enum에서는 리플렉션을 통한 생성자 호출을 막는다.<br/>
+    또한, enum은 Serializable을 구현하고 있기 때문에 직렬화, 역직렬화에서도 안전하다.<br/>
+    단, 클래스를 로딩하는 시점에서 미리 만들어지고, 상속을 사용할 수 없다.(단점)
+
+```java
+//Settings
+public enum Settings {
+    INSTANCE;
+}
+```
+
+IntelliJ에서 Bytecode 보는 법: `View` > `Show Bytecode` or `shift shift` > `Show Bytecode`
+
+싱글톤 구현할 때 권장하는 구현 방식 2가지
+
+-   static inner 클래스 사용하기
+-   enum 사용하기
