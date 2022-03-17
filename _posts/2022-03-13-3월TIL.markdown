@@ -128,6 +128,7 @@ public class Settings {
 
 ### 3/17(목)
 
+코딩으로 학습하는 GoF의 디자인 패턴 - 싱글톤 패턴 3부<br/>
 싱글톤 패턴 구현 방법을 깨트리는 방법
 
 -   리플렉션 사용하기
@@ -206,3 +207,5 @@ public class Settings implements Serializable {
     }
 }
 ```
+
+---
