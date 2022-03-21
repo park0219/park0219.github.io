@@ -272,3 +272,101 @@ IntelliJ에서 Bytecode 보는 법: `View` > `Show Bytecode` or `shift shift` > 
 -   L: Liskov substitution principle(LSP): 리스코프 치환 원칙 -> 프로그램의 객체는 프로그램의 정확성을 꺠뜨리지 않으면서 하위 타입의 인스턴스로 바꿀 수 있어야 한다.
 -   I: Interface segregation principle(ISP): 인터페이스 분리 원칙 -> 특정 클라이언트를 위한 인터페이스 여러 개가 범용 인터페이스 하나보다 낫다.
 -   D: Dependency inversion principle(DIP): 의존관계 역전 원칙 -> 프로그래머는 추상화에 의존해야지, 구체화에 의존하면 안된다.
+
+팩토리 패턴을 사용하지 않은 배 공장
+
+```java
+//Ship
+public class Ship {
+    private String name;
+    private String color;
+    private String logo;
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public String getColor() {
+        return color;
+    }
+    public void setColor(String color) {
+        this.color = color;
+    }
+    public String getLogo() {
+        return logo;
+    }
+    public void setLogo(String logo) {
+        this.logo = logo;
+    }
+    @Override
+    public String toString() {
+        return "Ship{" +
+                "name='" + name + '\'' +
+                ", color='" + color + '\'' +
+                ", logo='" + logo + '\'' +
+                '}';
+    }
+}
+```
+
+```java
+//ShipFactory
+public class ShipFactory {
+
+    public static Ship orderShip(String name, String email) {
+        // validate
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("배 이름을 지어주세요.");
+        }
+        if (email == null || email.isBlank()) {
+            throw new IllegalArgumentException("연락처를 남겨주세요.");
+        }
+
+        prepareFor(name);
+
+        Ship ship = new Ship();
+        ship.setName(name);
+
+        // Customizing for specific name
+        if (name.equalsIgnoreCase("whiteShip")) {
+            ship.setLogo("\uD83D\uDEE5️");
+        } else if (name.equalsIgnoreCase("whiteShip")) {
+            ship.setLogo("⚓");
+        }
+
+        // coloring
+        if (name.equalsIgnoreCase("whiteShip")) {
+            ship.setColor("white");
+        } else if (name.equalsIgnoreCase("whiteShip")) {
+            ship.setColor("black");
+        }
+
+        // notify
+        sendEmailTo(email, ship);
+
+        return ship;
+    }
+
+    private static void prepareFor(String name) {
+        System.out.println(name + " 만들 준비 중");
+    }
+
+    private static void sendEmailTo(String email, Ship ship) {
+        System.out.println(ship.getName() + " 다 만들었습니다.");
+    }
+}
+```
+
+```java
+//Client
+public class Client {
+    public static void main(String[] args) {
+        Ship whiteShip = ShipFactory.orderShip("WhiteShip", "keesun@mail.com");
+        System.out.println(whiteShip);
+
+        Ship blackShip = ShipFactory.orderShip("BlackShip", "keesun@mail.com");
+        System.out.println(blackShip);
+    }
+}
+```
