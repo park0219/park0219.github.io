@@ -370,3 +370,99 @@ public class Client {
     }
 }
 ```
+
+---
+
+### 3/21(월)
+
+코딩으로 학습하는 GoF의 디자인 패턴 - 팩토리 메소드 패턴 2부<br/>
+패턴 적용하기
+
+팩토리 패턴을 사용한 배 공장(Ship 클래스는 그대로 사용)
+
+```java
+//ShipFactory
+public interface ShipFactory {
+    default Ship orderShip(String name, String email) {
+        validate(name, email);
+        prepareFor(name);
+        Ship ship = createShip();
+        sendEmailTo(email, ship);
+        return ship;
+    }
+
+    void sendEmailTo(String email, Ship ship);
+
+    Ship createShip();
+
+    private void validate(String name, String email) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("배 이름을 지어주세요.");
+        }
+        if (email == null || email.isBlank()) {
+            throw new IllegalArgumentException("연락처를 남겨주세요.");
+        }
+    }
+
+    private void prepareFor(String name) {
+        System.out.println(name + " 만들 준비 중");
+    }
+}
+```
+
+```java
+//WhiteShip
+public class WhiteShip extends Ship {
+    public WhiteShip() {
+        setName("WhiteShip");
+        setLogo("\uD83D\uDEE5️");
+        setColor("white");
+    }
+}
+```
+
+```java
+//BlackShip
+public class BlackShip extends Ship {
+    public BlackShip() {
+        setName("BlackShip");
+        setColor("black");
+        setLogo("⚓");
+    }
+}
+```
+
+```java
+//WhiteShipFactory
+public class WhiteShipFactory extends ShipFactory {
+    @Override
+    public Ship createShip() {
+        return new WhiteShip();
+    }
+}
+```
+
+```java
+//BlackShipFactory
+public class BlackShipFactory extends ShipFactory {
+    @Override
+    public Ship createShip() {
+        return new BlackShip();
+    }
+}
+```
+
+```java
+//Client
+public class Client {
+    public static void main(String[] args) {
+        Client client = new Client();
+
+        Ship whiteShip = new WhiteShipFactory().orderShip("WhiteShip", "keesun@mail.com");
+        System.out.println(whiteShip);
+
+        Ship blackShip = new BlackShipFactory().orderShip("BlackShip", "keesun@mail.com");
+        System.out.println(blackShip);
+    }
+}
+```
