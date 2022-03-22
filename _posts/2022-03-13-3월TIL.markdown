@@ -391,7 +391,9 @@ public interface ShipFactory {
         return ship;
     }
 
-    void sendEmailTo(String email, Ship ship);
+    private void sendEmailTo(String email, Ship ship) {
+        System.out.println(ship.getName() + "다 만들었습니다.");
+    }
 
     Ship createShip();
 
@@ -463,6 +465,90 @@ public class Client {
 
         Ship blackShip = new BlackShipFactory().orderShip("BlackShip", "keesun@mail.com");
         System.out.println(blackShip);
+    }
+}
+```
+
+---
+
+### 3/22(화)
+
+코딩으로 학습하는 GoF의 디자인 패턴 - 팩토리 메소드 패턴 3부<br/>
+인터페이스 적용하기
+
+인터페이스 적용한 코드(WhiteShip, BlackShip 클래스는 그대로 이용)
+
+```java
+//ShipFactory
+public interface ShipFactory {
+    default Ship orderShip(String name, String email) {
+        validate(name, email);
+        prepareFor(name);
+        Ship ship = createShip();
+        sendEmailTo(email, ship);
+        return ship;
+    }
+
+    void sendEmailTo(String email, Ship ship);
+
+    Ship createShip();
+
+    private void validate(String name, String email) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("배 이름을 지어주세요.");
+        }
+        if (email == null || email.isBlank()) {
+            throw new IllegalArgumentException("연락처를 남겨주세요.");
+        }
+    }
+
+    private void prepareFor(String name) {
+        System.out.println(name + " 만들 준비 중");
+    }
+}
+```
+
+```java
+//DefaultShipFactory
+public abstract class DefaultShipFactory implements ShipFactory {
+    @Override
+    public void sendEmailTo(String email, Ship ship) {
+        System.out.println(ship.getName() + " 다 만들었습니다.");
+    }
+}
+```
+
+```java
+//WhiteShipFactory
+public class WhiteShipFactory extends DefaultShipFactory {
+    @Override
+    public Ship createShip() {
+        return new WhiteShip();
+    }
+}
+```
+
+```java
+//BlackShipFactory
+public class BlackFactory extends DefaultShipFactory {
+    @Override
+    public Ship createShip() {
+        return new BlackShip();
+    }
+}
+```
+
+```java
+//Client
+public class Client {
+    public static void main(String[] args) {
+        Client client = new Client();
+        client.print(new WhiteShipFactory(), "whiteShip", "keesun@mail.com");
+        client.print(new BlackShipFactory(), "blackShip", "keesun@mail.com");
+    }
+
+    private void print(ShipFactory shipFactory, String name, String email) {
+        System.out.println(shipFactory.orderShip(name, email));
     }
 }
 ```
