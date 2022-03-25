@@ -585,3 +585,31 @@ public class Client {
     -   예시) java.lang.Calendar 또는 java.lang.NumberFormat
 -   스프링 BeanFactory
     -   Object 타입의 Product를 만드는 BeanFactory라는 Creator가 있다.
+
+---
+
+### 3/25(금)
+
+코딩으로 학습하는 GoF의 디자인 패턴 - 추상 팩토리 패턴 1부<br/>
+패턴 소개
+
+**추상 팩토리(Abstract factory) 패턴: 서로 관련있는 여러 객체를 만들어주는 인터페이스.(팩토리 메소드 패턴과 유사하지만 초점이 팩토리를 사용하는 클라이언트에 있다.)<br/>
+구체적으로 어떤 클래스의 인스턴스(concrete product)를 사용하는지 감출 수 있다 .**
+
+코드 변경없이 제품군을 늘려나갈 수 있도록 추상 팩토리 패턴을 사용한다.
+
+```java
+//WhiteShipFactory(팩토리 메소드에서 사용한 DefaultShipFactory 클래스 상속)
+public class WhiteShipFactory extends DefaultShipFactory {
+    @Override
+    public Ship createShip() {
+        Ship ship = new WhiteShip();
+        //추상 팩토리 패턴을 사용 안 했을 때
+        //배의 부품이 변경될 때 바뀌는 코드 시작점
+        ship.setAnchor(new WhiteAnchor());
+        ship.setWheel(new WhiteWheel());
+        //배의 부품이 변경될 때 바뀌는 코드 끝점
+        return ship;
+    }
+}
+```
