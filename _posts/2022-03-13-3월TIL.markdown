@@ -613,3 +613,116 @@ public class WhiteShipFactory extends DefaultShipFactory {
     }
 }
 ```
+
+---
+
+### 3/26(토)
+
+코딩으로 학습하는 GoF의 디자인 패턴 - 추상 팩토리 패턴 1부<br/>
+패턴 적용하기
+
+```java
+//Anchor
+public interface Anchor {
+}
+```
+
+```java
+//Wheel
+public interface Wheel {
+}
+```
+
+```java
+//ShipPartsFactory
+public interface ShipPartsFactory {
+    Anchor createAnchor();
+    Wheel createWheel();
+}
+```
+
+```java
+//WhiteShipPartsFactory
+ public class WhiteShipPartsFactory implements ShipPartsFactory {
+    @Override
+    public Anchor createAnchor() {
+        return new WhiteAnchor();
+    }
+    @Override
+    public Wheel createWheel() {
+        return new WhiteWheel();
+    }
+}
+```
+
+```java
+//WhiteShipFactory(팩토리 메소드 패턴에서 사용한 DefaultShipFactory, WhiteShip 그대로 사용) - 클라이언트
+public class WhiteShipFactory extends DefaultShipFactory {
+
+    private ShipPartsFactory shipPartsFactory;
+
+    public WhiteShipFactory(ShipPartsFactory shipPartsFactory) {
+        this.shipPartsFactory = shipPartsFactory;
+    }
+
+    @Override
+    public Ship createShip() {
+        Ship ship = new WhiteShip();
+        ship.setAnchor(shipPartsFactory.createAnchor());
+        ship.setWheel(shipPartsFactory.createWheel());
+        return ship;
+    }
+}
+```
+
+Ship 객체 Anchor, Wheel 부분 수정
+
+```java
+private Wheel wheel;
+private Anchor anchor;
+```
+
+변경되는 부품
+
+```java
+//WhiteAnchorPro
+public class WhiteAnchorPro implements Anchor{
+}
+```
+
+```java
+//WhiteWheelPro
+public class WhiteWheelPro implements Wheel {
+}
+```
+
+변경된 부품을 사용하는 공장
+
+```java
+public class WhitePartsProFactory implements ShipPartsFactory {
+    @Override
+    public Anchor createAnchor() {
+        return new WhiteAnchorPro();
+    }
+
+    @Override
+    public Wheel createWheel() {
+        return new WhiteWheelPro();
+    }
+}
+```
+
+확인 코드
+
+```java
+//ShipInventory
+public class ShipInventory {
+    public static void main(String[] args) {
+        //ShipFactory shipFactory = new WhiteShipFactory(new WhiteShipPartsFactory()); //공장을 바꾸면 배의 부품도 변경된다.
+        ShipFactory shipFactory = new WhiteShipFactory(new WhiteShipPartsProFactory());
+        Ship ship = shipFactory.createShip();
+        System.out.println(ship.getAnchor().getClass());
+        System.out.println(ship.getWheel().getClass());
+    }
+}
+```
