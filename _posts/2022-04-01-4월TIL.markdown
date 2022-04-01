@@ -1,0 +1,19 @@
+---
+layout: post
+title: "2022년 4월 TIL"
+date: 2022-04-01 18:00:00 +0900
+categories: 202204 TIL
+---
+
+### 4/1(금)
+
+코딩으로 학습하는 GoF의 디자인 패턴 - 빌더 패턴 4부<br/>
+자바와 스프링에서 찾아보는 패턴
+
+-   자바 8 Stream.Builder API
+-   StringBuilder
+-   롬복의 @Builder
+-   스프링
+    -   UriComponentsBuilder
+    -   MockMvcWebClientBuilder
+    -   ...Builder
