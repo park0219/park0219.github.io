@@ -379,3 +379,103 @@ public class App {
 
 **브릿지(Bridge) 패턴: 추상적인 것과 구체적인 것을 분리하여 연결하는 패턴<br/>
 하나의 계층 구조일 때보다 각기 나누었을 때 독립적인 계층 구조로 발전시킬 수 있다.**
+
+---
+
+### 4/11(월)
+
+코딩으로 학습하는 GoF의 디자인 패턴 - 브릿지 패턴 2부<br/>
+패턴 적용하기
+
+```java
+//Skin
+public interface Skin {
+    String getName();
+}
+```
+
+```java
+//Champion
+public interface Champion extends Skin {
+    void move();
+    void skillQ();
+    void skillW();
+    void skillE();
+    void skillR();
+}
+```
+
+```java
+//DefaultChampion
+public class DefaultChampion implements Champion {
+
+    private Skin skin;
+
+    private String name;
+
+    public DefaultChampion(Skin skin, String name) {
+        this.skin = skin;
+        this.name = name;
+    }
+
+    @Override
+    public void move() {
+        System.out.printf("%s %s move\n", skin.getName(), this.name);
+    }
+
+    @Override
+    public void skillQ() {
+        System.out.printf("%s %s Q\n", skin.getName(), this.name);
+    }
+
+    @Override
+    public void skillW() {
+        System.out.printf("%s %s W\n", skin.getName(), this.name);
+    }
+
+    @Override
+    public void skillE() {
+        System.out.printf("%s %s E\n", skin.getName(), this.name);
+    }
+
+    @Override
+    public void skillR() {
+        System.out.printf("%s %s R\n", skin.getName(), this.name);
+    }
+
+    @Override
+    public String getName() {
+        return null;
+    }
+}
+```
+
+```java
+//아리(챔피온 종류 추가)
+public class 아리 extends DefaultChampion {
+    public 아리(Skin skin) {
+        super(skin, "아리");
+    }
+}
+```
+
+```java
+//KDA(스킨 종류 추가)
+public class KDA implements Skin{
+    @Override
+    public String getName() {
+        return "KDA";
+    }
+}
+```
+
+```java
+//App
+public abstract class App implements Champion {
+    public static void main(String[] args) {
+        Champion kda아리 = new 아리(new KDA());
+        kda아리.skillQ();
+        kda아리.skillW();
+    }
+}
+```
