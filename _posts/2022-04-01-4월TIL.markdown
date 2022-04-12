@@ -492,3 +492,16 @@ public abstract class App implements Champion {
     -   추상적인 코드와 구체적인 코드를 분리하여 사용할 수 있다.
 -   단점
     -   계층 구조가 늘어나 복잡도가 증가할 수 있다.
+
+---
+
+### 4/13(수)
+
+코딩으로 학습하는 GoF의 디자인 패턴 - 브릿지 패턴 4부<br/>
+자바와 스프링에서 찾아보는 패턴
+
+-   자바
+    -   JDBC API, DriverManager와 Driver
+    -   SLF4J, 로깅 퍼사드와 로거
+-   스프링
+    -   Portable Service Abstraction
