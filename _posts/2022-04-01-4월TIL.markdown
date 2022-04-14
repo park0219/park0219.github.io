@@ -505,3 +505,13 @@ public abstract class App implements Champion {
     -   SLF4J, 로깅 퍼사드와 로거
 -   스프링
     -   Portable Service Abstraction
+
+---
+
+### 4/14(목)
+
+코딩으로 학습하는 GoF의 디자인 패턴 - 컴포짓 패턴 1부<br/>
+패턴 소개
+
+**컴포짓(Composite) 패턴: 그룹 전체와 개별 객체를 동일하게 처리할 수 있는 패턴<br/>
+클라이언트 입장에서는 '전체'나 '부분'이나 모두 동일한 컴포넌트로 인식할 수 있는 계층 구조를 만든다.(Part-Whole Hierarchy)**
