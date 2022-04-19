@@ -636,3 +636,124 @@ public class Client {
 
 **데코레이터(Decorator) 패턴: 기존 코드를 변경하지 않고 부가 기능을 추가하는 패턴<br/>
 상속이 아닌 위임을 사용해서 보다 유연하게(런타임에) 부가 기능을 추가하는 것도 가능하다.**
+
+---
+
+### 4/19(화)
+
+코딩으로 학습하는 GoF의 디자인 패턴 - 데코레이터 패턴 2부<br/>
+패턴 적용하기
+
+```java
+//CommentService
+public interface CommentService {
+    void addComment(String comment);
+}
+```
+
+```java
+//DefaultCommentService
+public class DefaultCommentService implements CommentService {
+    @Override
+    public void addComment(String comment) {
+        System.out.println(comment);
+    }
+}
+```
+
+```java
+//CommentDecorator
+public class CommentDecorator implements CommentService {
+    private CommentService commentService;
+
+    public CommentDecorator(CommentService commentService) {
+        this.commentService = commentService;
+    }
+
+    @Override
+    public void addComment(String comment) {
+        commentService.addComment(comment);
+    }
+}
+```
+
+```java
+//TrimmingCommentDecorator
+public class TrimmingCommentDecorator extends CommentDecorator {
+
+    public TrimmingCommentDecorator(CommentService commentService) {
+        super(commentService);
+    }
+
+    @Override
+    public void addComment(String comment) {
+        super.addComment(trim(comment));
+    }
+
+    private String trim(String comment) {
+        return comment.replace("...", "");
+    }
+}
+```
+
+```java
+//SpamFilteringCommentDecorator
+public class SpamFilteringCommentDecorator extends CommentDecorator {
+
+    public SpamFilteringCommentDecorator(CommentService commentService) {
+        super(commentService);
+    }
+
+    @Override
+    public void addComment(String comment) {
+        if (isNotSpam(comment)) {
+            super.addComment(comment);
+        }
+    }
+
+    private boolean isNotSpam(String comment) {
+        return !comment.contains("http");
+    }
+}
+```
+
+```java
+//Client
+public class Client {
+    private CommentService commentService;
+
+    public Client(CommentService commentService) {
+        this.commentService = commentService;
+    }
+
+    public void writeComment(String comment) {
+        commentService.addComment(comment);
+    }
+}
+```
+
+```java
+//App
+public class App {
+
+    private static boolean enabledSpamFilter = true;
+    private static boolean enabledTrimming = true;
+
+    public static void main(String[] args) {
+        CommentService commentService = new DefaultCommentService();
+
+        if (enabledSpamFilter) {
+            commentService = new SpamFilteringCommentDecorator(commentService);
+        }
+
+        if (enabledTrimming) {
+            commentService = new TrimmingCommentDecorator(commentService);
+        }
+
+        Client client = new Client(commentService);
+        client.writeComment("오징어게임");
+        client.writeComment("보는게 하는거 보다 재밌을 수가 없지...");
+        client.writeComment("http://whiteship.me");
+    }
+}
+```
