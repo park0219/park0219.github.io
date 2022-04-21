@@ -770,3 +770,17 @@ public class App {
     -   컴파일 타임이 아닌 런타임에 동적으로 기능을 변경할 수 있다.
 -   단점
     -   데코레이터를 조합하는 코드가 복잡할 수 있다.
+
+---
+
+### 4/21(목)
+
+코딩으로 학습하는 GoF의 디자인 패턴 - 데코레이터 패턴 4부<br/>
+자바와 스프링에서 찾아보는 패턴
+
+-   자바
+    -   InputStream, OutputStream, Reader, Writer의 생성자를 활용한 랩퍼
+    -   java.util.Collections가 제공하는 메소드들 활용한 랩퍼
+    -   javax.servlet.http.HttpServletRequest/ResponseWrapper
+-   스프링
+    -   ServerHttpRequestDecorator
