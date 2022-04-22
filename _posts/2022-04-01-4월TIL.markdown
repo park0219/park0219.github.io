@@ -794,3 +794,131 @@ public class App {
 
 **퍼사드(Facade) 패턴: 복잡한 서브 시스템 의존성을 최소화하는 방법<br/>
 클라이언트가 사용해야 하는 복잡한 서브 시스템 의존성을 간단한 인터페이스로 추상화 할 수 있다..**
+
+---
+
+### 4/23(토)
+
+코딩으로 학습하는 GoF의 디자인 패턴 - 퍼사드 패턴 2부<br/>
+패턴 적용하기
+
+```java
+//EmailSettings
+public class EmailSettings {
+    private String host;
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
+    }
+}
+```
+
+```java
+//EmailMessage
+public class EmailMessage {
+
+    private String from;
+    private String to;
+    private String cc;
+    private String bcc;
+    private String subject;
+    private String text;
+
+    public String getFrom() {
+        return from;
+    }
+    public void setFrom(String from) {
+        this.from = from;
+    }
+    public String getTo() {
+        return to;
+    }
+    public void setTo(String to) {
+        this.to = to;
+    }
+    public String getSubject() {
+        return subject;
+    }
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+    public String getText() {
+        return text;
+    }
+    public void setText(String text) {
+        this.text = text;
+    }
+    public String getCc() {
+        return cc;
+    }
+    public void setCc(String cc) {
+        this.cc = cc;
+    }
+    public String getBcc() {
+        return bcc;
+    }
+    public void setBcc(String bcc) {
+        this.bcc = bcc;
+    }
+}
+```
+
+```java
+//EmailSender
+public class EmailSender {
+    private EmailSettings emailSettings;
+
+    public EmailSender(EmailSettings emailSettings) {
+        this.emailSettings = emailSettings;
+    }
+
+    /**
+     * 이메일 보내는 메소드
+     * @param emailMessage
+     */
+    public void sendEmail(EmailMessage emailMessage) {
+        Properties properties = System.getProperties();
+        properties.setProperty("mail.smtp.host", emailSettings.getHost());
+
+        Session session = Session.getDefaultInstance(properties);
+
+        try {
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(emailMessage.getFrom()));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(emailMessage.getTo()));
+            message.addRecipient(Message.RecipientType.CC, new InternetAddress(emailMessage.getCc()));
+            message.setSubject(emailMessage.getSubject());
+            message.setText(emailMessage.getText());
+
+            Transport.send(message);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+```java
+//Client
+public class Client {
+    public static void main(String[] args) {
+        EmailSettings emailSettings = new EmailSettings();
+        emailSettings.setHost("127.0.0.1");
+
+        EmailSender emailSender = new EmailSender(emailSettings);
+
+        EmailMessage emailMessage = new EmailMessage();
+        emailMessage.setFrom("keesun");
+        emailMessage.setTo("whiteship");
+        emailMessage.setCc("일남");
+        emailMessage.setSubject("오징어게임");
+        emailMessage.setText("밖은 더 지옥이더라고..");
+
+        emailSender.sendEmail(emailMessage);
+    }
+}
+```
