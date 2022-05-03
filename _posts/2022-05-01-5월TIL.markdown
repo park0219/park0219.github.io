@@ -80,3 +80,13 @@ public class Client {
     -   다이나믹 프록시, java.lang.reflect.Proxy
 -   스프링
     -   스프링 AOP
+
+---
+
+### 5/4(수)
+
+코딩으로 학습하는 GoF의 디자인 패턴 - 책임 연쇄 패턴 1부<br/>
+패턴 소개
+
+**책임 연쇄(Chain-of-Responsibility) 패턴: 요청을 보내는 쪽(sender)과 요청을 처리하는 쪽(receiver)을 분리하는 패턴<br/>
+핸들러 체인을 사용해서 요청을 처리한다.**
