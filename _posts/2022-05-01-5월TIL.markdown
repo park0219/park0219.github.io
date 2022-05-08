@@ -222,3 +222,170 @@ public class Client {
 
 **커맨드(Command) 패턴: 요청을 캡슐화하여 호출자(invoker)와 수신자(receiver)를 분리하는 패턴<br/>
 요청을 처리하는 방법이 바뀌더라도, 호출자의 코드는 변경되지 않는다.**
+
+---
+
+### 5/9(월)
+
+코딩으로 학습하는 GoF의 디자인 패턴 - 커맨드 패턴 2부<br/>
+패턴 적용하기
+
+```java
+//Command
+public interface Command {
+    void execute();
+    void undo();
+}
+```
+
+```java
+//Button
+public class Button {
+    private Stack<Command> commands = new Stack<>();
+
+    public void press(Command command) {
+        command.execute();
+        commands.push(command);
+    }
+
+    public void undo() {
+        if (!commands.isEmpty()) {
+            Command command = commands.pop();
+            command.undo();
+        }
+    }
+
+    public static void main(String[] args) {
+        Button button = new Button();
+        button.press(new GameStartCommand(new Game()));
+        button.press(new LightOnCommand(new Light()));
+        button.undo();
+        button.undo();
+    }
+}
+```
+
+```java
+//LightOnCommand
+public class LightOnCommand implements Command {
+    private Light light;
+
+    public LightOnCommand(Light light) {
+        this.light = light;
+    }
+
+    @Override
+    public void execute() {
+        light.on();
+    }
+
+    @Override
+    public void undo() {
+        new LightOffCommand(this.light).execute();
+    }
+}
+```
+
+```java
+//LightOffCommand
+public class LightOffCommand implements Command {
+    private Light light;
+
+    public LightOffCommand(Light light) {
+        this.light = light;
+    }
+
+    @Override
+    public void execute() {
+        light.off();
+    }
+
+    @Override
+    public void undo() {
+        new LightOnCommand(this.light).execute();
+    }
+}
+```
+
+```java
+//Game
+public class Game {
+    private boolean isStarted;
+
+    public void start() {
+        System.out.println("게임을 시작합니다.");
+        this.isStarted = true;
+    }
+
+    public void end() {
+        System.out.println("게임을 종료합니다.");
+        this.isStarted = false;
+    }
+
+    public boolean isStarted() {
+        return isStarted;
+    }
+}
+```
+
+```java
+//GameStartCommand
+public class GameStartCommand implements Command {
+    private Game game;
+
+    public GameStartCommand(Game game) {
+        this.game = game;
+    }
+
+    @Override
+    public void execute() {
+        game.start();
+    }
+
+    @Override
+    public void undo() {
+        new GameEndCommand(this.game).execute();
+    }
+}
+
+```
+
+```java
+//GameEndCommand
+public class GameEndCommand implements Command {
+    private Game game;
+
+    public GameEndCommand(Game game) {
+        this.game = game;
+    }
+
+    @Override
+    public void execute() {
+        game.end();
+    }
+
+    @Override
+    public void undo() {
+        new GameStartCommand(this.game).execute();
+    }
+}
+```
+
+```java
+//MyApp
+public class MyApp {
+    private Command command;
+
+    public MyApp(Command command) {
+        this.command = command;
+    }
+
+    public void press() {
+        command.execute();
+    }
+
+    public static void main(String[] args) {
+        MyApp myApp = new MyApp(new GameStartCommand(new Game()));
+    }
+}
+```
