@@ -845,3 +845,16 @@ public class Restaurant {
     -   각각의 컴포넌트 코드를 보다 간결하게 유지할 수 있다.
 -   단점
     -   중재자 역할을 하는 클래스의 복잡도와 결합도가 증가한다.
+
+---
+
+### 5/23(월)
+
+코딩으로 학습하는 GoF의 디자인 패턴 - 중재자 패턴 4부<br/>
+자바와 스프링에서 찾아보는 패턴
+
+-   자바
+    -   ExecutorService
+    -   Executor
+-   스프링
+    -   DispatcherServlet
