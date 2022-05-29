@@ -986,3 +986,90 @@ public class Client {
 
 **옵저버(Observer) 패턴: 다수의 객체가 특정 객체의 상태 변화를 감지하고 알림을 받는 패턴<br/>
 발행(publish)-구독(subscribe) 패턴을 구현할 수 있다.**
+
+---
+
+### 5/29(일)
+
+코딩으로 학습하는 GoF의 디자인 패턴 - 옵저버 패턴 2부<br/>
+패턴 적용하기
+
+```java
+//Subscriber(Observer Interface)
+public interface Subscriber {
+    void handleMessage(String message);
+}
+```
+
+```java
+//Usr(Concrete Observer)
+public class User implements Subscriber {
+    private String name;
+
+    public User(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void handleMessage(String message) {
+        System.out.println(message);
+    }
+}
+```
+
+```java
+//ChatServer(Subject)
+public class ChatServer {
+    private Map<String, List<Subscriber>> subscribers = new HashMap<>();
+
+    public void register(String subject, Subscriber subscriber) {
+        if (this.subscribers.containsKey(subject)) {
+            this.subscribers.get(subject).add(subscriber);
+        } else {
+            List<Subscriber> list = new ArrayList<>();
+            list.add(subscriber);
+            this.subscribers.put(subject, list);
+        }
+    }
+
+    public void unregister(String subject, Subscriber subscriber) {
+        if (this.subscribers.containsKey(subject)) {
+            this.subscribers.get(subject).remove(subscriber);
+        }
+    }
+
+    public void sendMessage(User user, String subject, String message) {
+        if (this.subscribers.containsKey(subject)) {
+            String userMessage = user.getName() + ": " + message;
+            this.subscribers.get(subject).forEach(s -> s.handleMessage(userMessage));
+        }
+    }
+}
+```
+
+```java
+//Client
+public class Client {
+    public static void main(String[] args) {
+        ChatServer chatServer = new ChatServer();
+        User user1 = new User("keesun");
+        User user2 = new User("whiteship");
+
+        chatServer.register("오징어게임", user1);
+        chatServer.register("오징어게임", user2);
+
+        chatServer.register("디자인패턴", user1);
+
+        chatServer.sendMessage(user1, "오징어게임", "아.. 이름이 기억났어.. 일남이야.. 오일남");
+        chatServer.sendMessage(user2, "디자인패턴", "옵저버 패턴으로 만든 채팅");
+
+        chatServer.unregister("디자인패턴", user2);
+
+        chatServer.sendMessage(user2, "디자인패턴", "옵저버 패턴 장, 단점 보는 중");
+    }
+}
+```
