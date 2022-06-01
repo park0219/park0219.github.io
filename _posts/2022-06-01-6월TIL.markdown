@@ -1,0 +1,14 @@
+---
+layout: post
+title: "2022년 6월 TIL"
+date: 2022-06-01 22:00:00 +0900
+categories: 202206 TIL
+---
+
+### 6/1(수)
+
+코딩으로 학습하는 GoF의 디자인 패턴 - 옵저버 패턴 5부<br/>
+스프링에서 찾아보는 패턴
+
+-   스프링
+    -   ApplicationContext와 ApplicationEvent
