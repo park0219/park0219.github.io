@@ -22,3 +22,180 @@ categories: 202206 TIL
 
 **상태(State) 패턴: 객체 내부 상태 변경에 따라 객체의 행동이 달라지는 패턴<br/>
 상태에 특화된 행동들을 분리해 낼 수 있으며, 새로운 행동을 추가하더라도 다른 행동에 영향을 주지 않는다.**
+
+---
+
+### 6/3(금)
+
+코딩으로 학습하는 GoF의 디자인 패턴 - 상태 패턴 2부<br/>
+패턴 적용하기
+
+```java
+//Student
+public class Student {
+    private String name;
+
+    public Student(String name) {
+        this.name = name;
+    }
+
+    private Set<OnlineCourse> onlineCourses = new HashSet<>();
+
+    public boolean isAvailable(OnlineCourse onlineCourse) {
+        return onlineCourses.contains(onlineCourse);
+    }
+
+    public void addPrivate(OnlineCourse onlineCourse) {
+        this.onlineCourses.add(onlineCourse);
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "name='" + name + '\'' +
+                '}';
+    }
+}
+```
+
+```java
+//OnlineCourse
+public class OnlineCourse {
+    private State state = new Draft(this);
+
+    private List<Student> students = new ArrayList<>();
+
+    private List<String> reviews = new ArrayList<>();
+
+    public void addStudent(Student student) {
+        this.state.addStudent(student);
+    }
+
+    public void addReview(String review, Student student) {
+        this.state.addReview(review, student);
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public List<String> getReviews() {
+        return reviews;
+    }
+
+    public void changeState(State state) {
+        this.state = state;
+    }
+}
+```
+
+```java
+//State
+public interface State {
+    void addReview(String review, Student student);
+
+    void addStudent(Student student);
+}
+```
+
+```java
+//Client
+public class Client {
+    public static void main(String[] args) {
+        OnlineCourse onlineCourse = new OnlineCourse();
+        Student student = new Student("whiteship");
+        Student keesun = new Student("keesun");
+        keesun.addPrivate(onlineCourse);
+
+        onlineCourse.addStudent(student);
+
+        onlineCourse.changeState(new Private(onlineCourse));
+
+        onlineCourse.addReview("hello", student);
+
+        onlineCourse.addStudent(keesun);
+
+        System.out.println(onlineCourse.getState());
+        System.out.println(onlineCourse.getReviews());
+        System.out.println(onlineCourse.getStudents());
+    }
+}
+```
+
+```java
+//Draft
+public class Draft implements State {
+    private OnlineCourse onlineCourse;
+
+    public Draft(OnlineCourse onlineCourse) {
+        this.onlineCourse = onlineCourse;
+    }
+
+    @Override
+    public void addReview(String review, Student student) {
+        throw new UnsupportedOperationException("드래프트 상태에서는 리뷰를 남길 수 없습니다.");
+    }
+
+    @Override
+    public void addStudent(Student student) {
+        this.onlineCourse.getStudents().add(student);
+        if (this.onlineCourse.getStudents().size() > 1) {
+            this.onlineCourse.changeState(new Private(this.onlineCourse));
+        }
+    }
+}
+```
+
+```java
+//Private
+public class Private implements State {
+    private OnlineCourse onlineCourse;
+
+    public Private(OnlineCourse onlineCourse) {
+        this.onlineCourse = onlineCourse;
+    }
+
+    @Override
+    public void addReview(String review, Student student) {
+        if (this.onlineCourse.getStudents().contains(student)) {
+            this.onlineCourse.getReviews().add(review);
+        } else {
+            throw new UnsupportedOperationException("프라이빗 코스를 수강하는 학생만 리뷰를 남길 수 있습니다.");
+        }
+    }
+
+    @Override
+    public void addStudent(Student student) {
+        if (student.isAvailable(this.onlineCourse)) {
+            this.onlineCourse.getStudents().add(student);
+        } else {
+            throw new UnsupportedOperationException("프라이빗 코스를 수강할 수 없습니다.");
+        }
+    }
+}
+```
+
+```java
+//Published
+public class Published implements State {
+    private OnlineCourse onlineCourse;
+
+    public Published(OnlineCourse onlineCourse) {
+        this.onlineCourse = onlineCourse;
+    }
+
+    @Override
+    public void addReview(String review, Student student) {
+        this.onlineCourse.getReviews().add(review);
+    }
+
+    @Override
+    public void addStudent(Student student) {
+        this.onlineCourse.getStudents().add(student);
+    }
+}
+```
