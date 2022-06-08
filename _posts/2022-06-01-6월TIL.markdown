@@ -331,3 +331,13 @@ public class Client {
 -   스프링
     -   ApplicationContext
     -   PlatformTransactionManager
+
+---
+
+### 6/9(목)
+
+코딩으로 학습하는 GoF의 디자인 패턴 - 템플릿 메소드 패턴 1부<br/>
+패턴 소개
+
+**템플릿 메소드(Template method) 패턴: 알고리즘 구조를 서브 클래스가 확장할 수 있도록 템플릿으로 제공하는 방법<br/>
+추상 클래스는 템플릿을 제공하고 하위 클래스는 구체적인 알고리즘을 제공한다..**
