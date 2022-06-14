@@ -513,3 +513,128 @@ public class Client {
 -   정적 디스패치: 런타임이 아닌 컴파일타임에 컴파일러, 사용자, 바이트 코드 모두 어떤 메서드가 실행될지 아는 것이다.
 -   동적 디스패치: 런타임에 어떤 메서드를 실행시킬지 결정하는 것이다. 런타임에 메서드를 호출할 때 receiver parameter를 보고 어떤 객체인지 판단 후 그 클래스의 메서드를 호출한다.
 -   더블 디스패치: 동적 디스패치를 두 번 하는 것이다.
+
+---
+
+### 6/14(화)
+
+코딩으로 학습하는 GoF의 디자인 패턴 - 방문자 패턴 2부<br/>
+패턴 적용하기
+
+```java
+//Shape
+public interface Shape {
+    void accept(Device device);
+}
+```
+
+```java
+//Circle
+public class Circle implements Shape {
+    @Override
+    public void accept(Device device) {
+        device.print(this);
+    }
+}
+```
+
+```java
+//Rectangle
+public class Rectangle implements Shape {
+   @Override
+    public void accept(Device device) {
+        device.print(this);
+    }
+}
+```
+
+```java
+//Triangle
+public class Triangle implements Shape {
+   @Override
+    public void accept(Device device) {
+        device.print(this);
+    }
+}
+```
+
+```java
+//Device
+public interface Device {
+    void print(Circle circle);
+    void print(Rectangle rectangle);
+    void print(Triangle triangle);
+}
+```
+
+```java
+//Phone
+public class Phone implements Device {
+    @Override
+    public void print(Circle circle) {
+        System.out.println("Print Circle to Phone");
+    }
+
+    @Override
+    public void print(Rectangle rectangle) {
+        System.out.println("Print Rectangle to Phone");
+
+    }
+
+    @Override
+    public void print(Triangle triangle) {
+        System.out.println("Print Triangle to Phone");
+    }
+}
+```
+
+```java
+//Watch
+public class Watch implements Device {
+    @Override
+    public void print(Circle circle) {
+        System.out.println("Print Circle to Watch");
+    }
+
+    @Override
+    public void print(Rectangle rectangle) {
+        System.out.println("Print Rectangle to Watch");
+    }
+
+    @Override
+    public void print(Triangle triangle) {
+        System.out.println("Print Triangle to Watch");
+    }
+}
+```
+
+```java
+//Pad
+public class Pad implements Device {
+    @Override
+    public void print(Circle circle) {
+        System.out.println("Print Circle to Pad");
+    }
+
+    @Override
+    public void print(Rectangle rectangle) {
+        System.out.println("Print Rectangle to Pad");
+    }
+
+    @Override
+    public void print(Triangle triangle) {
+        System.out.println("Print Triangle to Pad");
+    }
+}
+```
+
+```java
+//Client
+public class Client {
+    public static void main(String[] args) {
+        Shape rectangle = new Rectangle();
+        Device device = new Pad();
+        rectangle.accept(device);
+    }
+}
+```
